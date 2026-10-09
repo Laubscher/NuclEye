@@ -1,0 +1,54 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Assemble site files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site/assets _site/data
+          cp index.html _site/index.html
+          cp assets/nucleye-eye.svg _site/assets/nucleye-eye.svg
+          cp data/viruses.json _site/data/viruses.json
+
+          while IFS= read -r data_file; do
+            [[ -n "$data_file" ]] || continue
+            source="data/$data_file"
+            [[ -f "$source" ]] || { echo "Missing site data file: $source" >&2; exit 1; }
+            mkdir -p "_site/$(dirname "$source")"
+            cp "$source" "_site/$source"
+          done < <(jq -r '.viruses[]?.sets[]?.file // empty' data/viruses.json)
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
