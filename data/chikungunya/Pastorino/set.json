@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "Pastorino",
+  "name": "Pastorino 2005",
+  "oligos": {
+    "F": {
+      "name": "F-CHIK",
+      "alignment_id": "F-CHIK",
+      "strand": "+"
+    },
+    "P": {
+      "name": "P-CHIK",
+      "alignment_id": "P-CHIK",
+      "strand": "+"
+    },
+    "R": {
+      "name": "R-CHIK",
+      "alignment_id": "R-CHIK",
+      "strand": "-"
+    }
+  },
+  "citation": {
+    "label": "Pastorino et al., 2005",
+    "title": "Development of a TaqMan RT-PCR assay without RNA extraction step for the detection and quantification of African Chikungunya viruses",
+    "url": "https://doi.org/10.1016/j.jviromet.2004.11.002"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "CDC_ChikV",
+  "name": "CDC 856",
+  "oligos": {
+    "F": {
+      "name": "CHIK856F",
+      "alignment_id": "CDC_Forward_ChikV",
+      "strand": "+"
+    },
+    "P": {
+      "name": "CHIK908FAM",
+      "alignment_id": "CDC_Probe_ChikV_probe",
+      "strand": "+"
+    },
+    "R": {
+      "name": "CHIK962C",
+      "alignment_id": "CDC_Reverse_ChikV_reverse",
+      "strand": "-"
+    }
+  },
+  "citation": {
+    "label": "Johnson et al., 2016",
+    "title": "Laboratory Diagnosis of Chikungunya Virus Infections and Commercial Sources for Diagnostic Assays",
+    "url": "https://doi.org/10.1093/infdis/jiw274"
+  }
+}

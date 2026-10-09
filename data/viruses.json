@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "viruses": [
+    {
+      "id": "chikungunya",
+      "name": "Chikungunya",
+      "reference": {
+        "id": "NC_004162",
+        "length": 11826
+      },
+      "sets": [
+        {
+          "id": "CDC_ChikV",
+          "name": "CDC 856",
+          "file": "chikungunya/CDC_ChikV/data.json"
+        },
+        {
+          "id": "Pastorino",
+          "name": "Pastorino 2005",
+          "file": "chikungunya/Pastorino/data.json"
+        }
+      ],
+      "last_updated": "2026-10-09T17:27:40+00:00"
+    }
+  ]
+}

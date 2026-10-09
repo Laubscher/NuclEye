@@ -1,0 +1,4 @@
+.venv/
+.idea/
+/data/chikungunya/.genbank-backups/
+/data/chikungunya/genbank_raw.fasta

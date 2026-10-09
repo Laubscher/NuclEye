@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "id": "chikungunya",
+  "name": "Chikungunya",
+  "reference_id": "NC_004162",
+  "description": "Base de séquences du virus Chikungunya pour NuclEye.",
+  "last_updated": "2026-10-09T17:27:40+00:00"
+}

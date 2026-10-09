@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" role="img" aria-label="NuclEye eye logo with A T G C nucleotide colors">
+ <defs>
+  <linearGradient id="lid" x1="0" y1="0" x2="0.85" y2="1"><stop stop-color="#07375a"/><stop offset="0.55" stop-color="#002743"/><stop offset="1" stop-color="#0a5182"/></linearGradient>
+  <radialGradient id="pupil" cx="65%" cy="27%" r="78%"><stop stop-color="#155a8c"/><stop offset="0.42" stop-color="#063657"/><stop offset="1" stop-color="#001b32"/></radialGradient>
+  <clipPath id="irisClip"><circle cx="400" cy="220" r="154"/></clipPath>
+ </defs>
+ <g clip-path="url(#irisClip)">
+  <rect x="246" y="66" width="154" height="154" fill="#21a452"/>
+  <rect x="400" y="66" width="154" height="154" fill="#e34843"/>
+  <rect x="246" y="220" width="154" height="154" fill="#ffb000"/>
+  <rect x="400" y="220" width="154" height="154" fill="#2486e6"/>
+  <circle cx="400" cy="220" r="154" fill="none" stroke="#ffffff" stroke-opacity=".15" stroke-width="5"/>
+ </g>
+ <circle cx="400" cy="220" r="70" fill="url(#pupil)"/>
+ <circle cx="427" cy="184" r="16" fill="#fff"/>
+ <circle cx="443" cy="210" r="8" fill="#7db2d5" opacity=".6"/>
+ <g font-family="DejaVu Sans,Arial,sans-serif" font-size="54" font-weight="700" fill="white" text-anchor="middle">
+  <text x="337" y="171">A</text><text x="466" y="171">T</text>
+  <text x="337" y="310">G</text><text x="466" y="310">C</text>
+ </g>
+ <path d="M105 205 C184 115 290 30 400 30 C510 30 616 115 695 205 C591 143 509 55 400 55 C291 55 209 143 105 205Z" fill="url(#lid)"/>
+ <path d="M105 235 C184 325 290 410 400 410 C510 410 616 325 695 235 C591 297 509 385 400 385 C291 385 209 297 105 235Z" fill="url(#lid)"/>
+</svg>
