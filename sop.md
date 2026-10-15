@@ -14,6 +14,7 @@ TAXID=<taxid_NCBI>
 EMAIL=<email>
 DEPUIS=2026-10
 ```
+Chikungunya virus (CHIKV) : NCBI Taxonomy ID 37124.
 
 ## 2. Vérifier puis mettre à jour les séquences
 

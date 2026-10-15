@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Nucleye — suivi des primers et sondes">
+  <meta name="description" content="Nucleye - suivi des primers et sondes">
   <title>Nucleye</title>
   <link rel="icon" type="image/svg+xml" href="./assets/nucleye-eye.svg">
   <style>
@@ -183,7 +183,7 @@
   const nucleotideColors = {A:'#369957', T:'#d74747', G:'#ffb000', C:'#357fca'};
   const iupac = {A:'A', C:'C', G:'G', T:'T', R:'AG', Y:'CT', S:'CG', W:'AT', K:'GT', M:'AC', B:'CGT', D:'AGT', H:'ACT', V:'ACG', N:'ACGT'};
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const pct = (n, d) => d ? (100*n/d).toLocaleString('fr-FR', {maximumFractionDigits:1}) + ' %' : '—';
+  const pct = (n, d) => d ? (100*n/d).toLocaleString('fr-FR', {maximumFractionDigits:1}) + ' %' : '-';
   const compatible = (base, primer) => canonical.includes(base) && iupac[primer].includes(base);
   let sets = [], viruses = [], rows = [], current = [], visible = [], positionStats = {};
   const pageSize = 10;
@@ -343,7 +343,7 @@
     try { url = new URL(citation.url); } catch { return; }
     if (!['https:', 'http:'].includes(url.protocol)) return;
     link.href = url.href;
-    link.title = [citation.label, typeof citation.title === 'string' ? citation.title : ''].filter(Boolean).join(' — ');
+    link.title = [citation.label, typeof citation.title === 'string' ? citation.title : ''].filter(Boolean).join(' - ');
     link.setAttribute('aria-label', `Référence : ${citation.label} (nouvel onglet)`);
     link.hidden = false;
   }
@@ -523,7 +523,7 @@
     const profiles = new Map();
     for (const m of row.members) { const key = signature(m); if (!profiles.has(key)) profiles.set(key,{row:m,n:0}); profiles.get(key).n++; }
     const date = row.collectionDate, loc = row.location, meta = groupMetadata(row);
-    $('ps-detail').innerHTML = `<div class="ps-head"><strong>${identifierLink(row.id)}</strong><button type="button" id="ps-close">Fermer</button></div><dl><dt>Date du représentant</dt><dd>${esc(date.raw || 'Non renseignée')} · ${precisionNames[date.precision]}</dd><dt>Lieu du représentant</dt><dd>${esc(loc.raw || [loc.country,loc.region,loc.locality].filter(Boolean).join(' / ') || 'Non renseigné')}</dd>${row.insertionRoles.length ? `<dt>Zone non évaluable</dt><dd>Insertion dans la cible : ${row.insertionRoles.join(', ')}</dd>` : ''}<dt>Profil</dt><dd class="ps-inline-profile">${profileLabel(row)}</dd><dt>Profils du groupe</dt><dd>${[...profiles.values()].sort((a,b) => b.n-a.n).map(p => `<div><span class="ps-inline-profile">${profileLabel(p.row)}</span> — ${p.n}/${row.members.length} (${pct(p.n,row.members.length)})${complete(p.row)?'':' · incomplet'}</div>`).join('')}</dd><dt>Pays du groupe</dt><dd>${esc(meta.countries.join(', '))}</dd><dt>Périodes du groupe</dt><dd>${esc(meta.periods.join(', '))}</dd><dt>Séquences représentées</dt><dd>${row.members.length}</dd><dt>Membres</dt><dd>${row.members.map(m => identifierLink(m.id)).join(', ')}</dd></dl>`;
+    $('ps-detail').innerHTML = `<div class="ps-head"><strong>${identifierLink(row.id)}</strong><button type="button" id="ps-close">Fermer</button></div><dl><dt>Date du représentant</dt><dd>${esc(date.raw || 'Non renseignée')} · ${precisionNames[date.precision]}</dd><dt>Lieu du représentant</dt><dd>${esc(loc.raw || [loc.country,loc.region,loc.locality].filter(Boolean).join(' / ') || 'Non renseigné')}</dd>${row.insertionRoles.length ? `<dt>Zone non évaluable</dt><dd>Insertion dans la cible : ${row.insertionRoles.join(', ')}</dd>` : ''}<dt>Profil</dt><dd class="ps-inline-profile">${profileLabel(row)}</dd><dt>Profils du groupe</dt><dd>${[...profiles.values()].sort((a,b) => b.n-a.n).map(p => `<div><span class="ps-inline-profile">${profileLabel(p.row)}</span> - ${p.n}/${row.members.length} (${pct(p.n,row.members.length)})${complete(p.row)?'':' · incomplet'}</div>`).join('')}</dd><dt>Pays du groupe</dt><dd>${esc(meta.countries.join(', '))}</dd><dt>Périodes du groupe</dt><dd>${esc(meta.periods.join(', '))}</dd><dt>Séquences représentées</dt><dd>${row.members.length}</dd><dt>Membres</dt><dd>${row.members.map(m => identifierLink(m.id)).join(', ')}</dd></dl>`;
     $('ps-detail').hidden = false;
   }
   function moveTooltip(event, cell) {
