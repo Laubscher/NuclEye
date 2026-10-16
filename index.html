@@ -9,7 +9,6 @@
   <title>Nucleye</title>
   <link rel="icon" type="image/svg+xml" href="./assets/nucleye-eye.svg">
   <style>
-    
     #primer-viewer{--ps-bg:light-dark(#f4f6f8,#141b23);--ps-panel:light-dark(#fff,#1b2530);--ps-ink:light-dark(#172c3b,#e5edf3);--ps-muted:light-dark(#5c6f7d,#acbdc9);--ps-line:light-dark(#dce4e9,#354754);--ps-teal:light-dark(#076c68,#76d0c2);--ps-soft:light-dark(#e5f3ee,#253e3c);--ps-orange:light-dark(#994014,#ffc395);--ps-orange-bg:light-dark(#fff0e3,#493528);--ps-n:light-dark(#edf0f3,#34424c);font:14px/1.45 system-ui,sans-serif;color:var(--ps-ink);background:var(--ps-bg);border:1px solid var(--ps-line);border-radius:14px;overflow:hidden;color-scheme:light dark}
     #primer-viewer *{box-sizing:border-box}
     #primer-viewer h2,#primer-viewer h3,#primer-viewer p{margin:0}
@@ -97,7 +96,7 @@
     @media(max-width:440px){#primer-viewer .ps-metrics{grid-template-columns:1fr}#primer-viewer .ps-metric{display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 12px}#primer-viewer .ps-metric .ps-value{grid-row:1/3;grid-column:2;margin:0}#primer-viewer .ps-bases{gap:2px}#primer-viewer .ps-base{font-size:11px}#primer-viewer .ps-small{font-size:11px}#primer-viewer .ps-detail dl{grid-template-columns:1fr;gap:3px}#primer-viewer .ps-detail dd{margin-bottom:6px}}
     @media(pointer:coarse){#primer-viewer select,#primer-viewer button{min-height:44px}#primer-viewer .ps-pos{min-height:110px}#primer-viewer .ps-table-filter{min-height:44px}}
     @media(pointer:coarse) and (max-width:600px){#primer-viewer .ps-bases{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px 5px}}
-  
+
     html{color-scheme:light dark;background:light-dark(#eef2f5,#10171f)}
     body{margin:0;padding:28px 18px}
     #primer-viewer{max-width:1320px;margin:0 auto}
@@ -205,7 +204,6 @@
   const signature = row => JSON.stringify(roles.map(role => [row.targets[state().a]?.[role] ?? null, row.targetStatus[role]]));
   const periodKey = date => date.year === null ? null : date.month === null ? String(date.year) : `${date.year}-${String(date.month).padStart(2,'0')}`;
   const precisionNames = {day:'jour', month:'mois', year:'année', unknown:'inconnue', unparsed:'non interprétée'};
-
   function parseDate(raw) {
     const empty = {raw: raw ?? null, year:null, month:null, day:null, precision:raw ? 'unparsed' : 'unknown'};
     if (typeof raw !== 'string' || !raw) return empty;
@@ -216,7 +214,6 @@
     if (day !== null && (day < 1 || day > new Date(Date.UTC(year,month,0)).getUTCDate())) return empty;
     return {raw, year, month, day, precision:day !== null ? 'day' : month !== null ? 'month' : 'year'};
   }
-
   function assert(condition, message) { if (!condition) throw new Error(message); }
   function validateSets(data) {
     assert(data?.schema_version === 1 && Array.isArray(data.sets) && data.sets.length, 'data.json : aucun set valide.');
@@ -477,7 +474,7 @@
     const oligo = activeSet().oligos[role], ref = oligo.sequence;
     positions[role] = Math.min(positions[role],ref.length-1);
     const buttons = [...ref].map((b,i) => `<button class="ps-pos${positionStats[role][i].mism ? ' has-mm' : ''}" type="button" data-position="${i}" data-site="${i}" data-role="${role}" aria-pressed="false" aria-label="${esc(distributionText(role,i))}"><span class="ps-column"><span class="ps-bar" style="height:${positionStats[role][i].known ? 100*positionStats[role][i].mism/positionStats[role][i].known : 0}%"></span></span><span class="ps-base">${b}</span><span class="ps-small">${i+1}</span></button>`).join('');
-    return `<div class="ps-oligo-panel" data-panel-role="${role}"><div class="ps-context" style="margin-bottom:8px"><span id="ps-oligo-title-${role}"><strong>${esc(oligo.name)}</strong> · ${ref.length} nt · ${esc(currentReference.id)}:${oligo.reference_start}–${oligo.reference_end} (${oligo.strand})</span><span>5′ → 3′</span></div><div class="ps-base-scroll"><div class="ps-bases" style="--ps-length:${ref.length}" aria-label="${names[role]} : mismatches par position">${buttons}</div></div><div id="ps-position-info-${role}" class="ps-site-info" hidden></div></div>`;
+    return `<div class="ps-oligo-panel" data-panel-role="${role}"><div class="ps-context" style="margin-bottom:8px"><span id="ps-oligo-title-${role}"><strong>${esc(oligo.name)}</strong> · ${ref.length} nt · ${esc(currentReference.id)}:${oligo.reference_start}-${oligo.reference_end} (${oligo.strand})</span><span>5′ → 3′</span></div><div class="ps-base-scroll"><div class="ps-bases" style="--ps-length:${ref.length}" aria-label="${names[role]} : mismatches par position">${buttons}</div></div><div id="ps-position-info-${role}" class="ps-site-info" hidden></div></div>`;
   }
   function draw() {
     const {c,y,d} = state(), displayedRoles = shownRoles();
@@ -520,10 +517,8 @@
   }
   function detail(id) {
     const row = current.find(r => r.id === id); if (!row) return;
-    const profiles = new Map();
-    for (const m of row.members) { const key = signature(m); if (!profiles.has(key)) profiles.set(key,{row:m,n:0}); profiles.get(key).n++; }
     const date = row.collectionDate, loc = row.location, meta = groupMetadata(row);
-    $('ps-detail').innerHTML = `<div class="ps-head"><strong>${identifierLink(row.id)}</strong><button type="button" id="ps-close">Fermer</button></div><dl><dt>Date du représentant</dt><dd>${esc(date.raw || 'Non renseignée')} · ${precisionNames[date.precision]}</dd><dt>Lieu du représentant</dt><dd>${esc(loc.raw || [loc.country,loc.region,loc.locality].filter(Boolean).join(' / ') || 'Non renseigné')}</dd>${row.insertionRoles.length ? `<dt>Zone non évaluable</dt><dd>Insertion dans la cible : ${row.insertionRoles.join(', ')}</dd>` : ''}<dt>Profil</dt><dd class="ps-inline-profile">${profileLabel(row)}</dd><dt>Profils du groupe</dt><dd>${[...profiles.values()].sort((a,b) => b.n-a.n).map(p => `<div><span class="ps-inline-profile">${profileLabel(p.row)}</span> - ${p.n}/${row.members.length} (${pct(p.n,row.members.length)})${complete(p.row)?'':' · incomplet'}</div>`).join('')}</dd><dt>Pays du groupe</dt><dd>${esc(meta.countries.join(', '))}</dd><dt>Périodes du groupe</dt><dd>${esc(meta.periods.join(', '))}</dd><dt>Séquences représentées</dt><dd>${row.members.length}</dd><dt>Membres</dt><dd>${row.members.map(m => identifierLink(m.id)).join(', ')}</dd></dl>`;
+    $('ps-detail').innerHTML = `<div class="ps-head"><strong>${identifierLink(row.id)}</strong><button type="button" id="ps-close">Fermer</button></div><dl><dt>Date du représentant</dt><dd>${esc(date.raw || 'Non renseignée')} · ${precisionNames[date.precision]}</dd><dt>Lieu du représentant</dt><dd>${esc(loc.raw || [loc.country,loc.region,loc.locality].filter(Boolean).join(' / ') || 'Non renseigné')}</dd>${row.insertionRoles.length ? `<dt>Zone non évaluable</dt><dd>Insertion dans la cible : ${row.insertionRoles.join(', ')}</dd>` : ''}<dt>Profil</dt><dd class="ps-inline-profile">${profileLabel(row)}</dd><dt>Pays du groupe</dt><dd>${esc(meta.countries.join(', '))}</dd><dt>Périodes du groupe</dt><dd>${esc(meta.periods.join(', '))}</dd><dt>Séquences représentées</dt><dd>${row.members.length}</dd><dt>Membres</dt><dd>${row.members.map(m => identifierLink(m.id)).join(', ')}</dd></dl>`;
     $('ps-detail').hidden = false;
   }
   function moveTooltip(event, cell) {
@@ -602,7 +597,6 @@
   }
   init();
 })();
-
 </script>
 </body>
 </html>
